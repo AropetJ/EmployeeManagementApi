@@ -11,6 +11,11 @@ namespace EmployeeManagementApi.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the username of the employee.
+        /// </summary>
+        public string Username { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the first name of the employee.
         /// </summary>
         public string FirstName { get; set; } = string.Empty;
@@ -34,5 +39,15 @@ namespace EmployeeManagementApi.Models
         /// Gets or sets the department of the employee.
         /// </summary>
         public string Department { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the base salary amount.
+        /// </summary>
+        public decimal BaseSalary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password hash of the user.
+        /// </summary>
+        public string PasswordHash { get; set; } = string.Empty;
     }
 }

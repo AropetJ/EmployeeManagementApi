@@ -28,6 +28,6 @@ namespace EmployeeManagementApi.Models
         /// <summary>
         /// Gets or sets the date of the salary.
         /// </summary>
-        /// public DateTime Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }

@@ -127,6 +127,8 @@ Follow these instructions to get the API up and running on your local machine.
 - **GET /api/employees/export**
   - Export employee data to CSV format.
 
+- Detailed documentation: https://documenter.getpostman.com/view/30974470/2sA3dskYVj
+
 ## Testing
 
 Use tools like **Postman** or **Swagger UI** to test each API endpoint. Ensure all CRUD operations are working as expected.

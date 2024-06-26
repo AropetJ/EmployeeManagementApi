@@ -5,13 +5,35 @@ namespace EmployeeManagementApi.Models
     /// </summary>
     public class RegisterModel
     {
-        /// <summary>
-        /// Gets or sets the username of the user.
-        /// </summary>
         public string Username { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the password of the user.
+        /// Gets or sets the first name of the employee.
+        /// </summary>
+        public string FirstName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the last name of the employee.
+        /// </summary>
+        public string LastName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the email address of the employee.
+        /// </summary>
+        public string Email { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the phone number of the employee.
+        /// </summary>
+        public string Phone { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the department of the employee.
+        /// </summary>
+        public string Department { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the password.
         /// </summary>
         public string Password { get; set; } = string.Empty;
     }

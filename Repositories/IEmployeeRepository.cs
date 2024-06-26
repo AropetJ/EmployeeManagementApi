@@ -42,5 +42,26 @@ namespace EmployeeManagementApi.Repositories
         /// <param name="id">The ID of the employee to delete.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a boolean value indicating whether the employee was successfully deleted.</returns>
         Task<bool> DeleteEmployeeAsync(int id);
+
+                /// <summary>
+        /// Retrieves a user by their username asynchronously.
+        /// </summary>
+        /// <param name="username">The username of the user to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains the retrieved user, or null if not found.</returns>
+        Task<Employee?> GetByUsernameAsync(string username);
+
+        /// <summary>
+        /// Retrieves a user by their email address asynchronously.
+        /// </summary>
+        /// <param name="email">The email address of the user to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains the retrieved user, or null if not found.</returns>
+        /// <remarks>This method is used to ensure that no duplicate email addresses are stored in the database.</remarks>
+        Task<Employee?> GetByEmailAsync(string email);
+
+        /// <summary>
+        /// Exports employees to a CSV file asynchronously.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation. The task result contains the exported CSV file as a byte array.</returns>
+        Task<byte[]> ExportEmployeesToCsvAsync();
     }
 }

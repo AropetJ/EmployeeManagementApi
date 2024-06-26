@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementApi.Models;
 using EmployeeManagementApi.Data;
+using CsvHelper;
+using System.Text;
+using System.Globalization;
 
 namespace EmployeeManagementApi.Repositories
 {
@@ -48,6 +51,15 @@ namespace EmployeeManagementApi.Repositories
         /// <returns>A task that represents the asynchronous operation. The task result contains the added employee.</returns>
         public async Task<Employee> AddEmployeeAsync(Employee employee)
         {
+            var existingEmployee = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Email == employee.Email);
+
+            if (existingEmployee != null)
+            {
+                
+                return null;
+            }
+
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return employee;
@@ -81,6 +93,47 @@ namespace EmployeeManagementApi.Repositories
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        /// <summary>
+        /// Retrieves a user by their username from the database asynchronously.
+        /// </summary>
+        /// <param name="username">The username of the user to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains the retrieved user, or null if not found.</returns>
+        public async Task<Employee?> GetByUsernameAsync(string username)
+        {
+            return await _context.Employees.SingleOrDefaultAsync(u => u.Username == username);
+        }
+
+        /// <summary>
+        /// Retrieves an employee by their email address from the database asynchronously.
+        /// </summary>
+        /// <param name="email">The email address of the user to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains the retrieved user, or null if not found.</returns>
+        /// <remarks>This method is used to ensure that no duplicate email addresses are stored in the database.</remarks>
+        /// <returns></returns>
+        public async Task<Employee?> GetByEmailAsync(string email)
+        {
+            return await _context.Employees.SingleOrDefaultAsync(u => u.Email == email);
+        }
+
+        /// <summary>
+        /// Exports the employees to a CSV file and returns the file content as a byte array.
+        /// </summary>
+        /// <returns>A byte array representing the CSV file content.</returns>
+        public async Task<byte[]> ExportEmployeesToCsvAsync()
+        {
+            var employees = await _context.Employees.ToListAsync();
+
+            // Using CsvHelper library to convert employees to CSV bytes
+            using (var memoryStream = new System.IO.MemoryStream())
+            using (var writer = new System.IO.StreamWriter(memoryStream, Encoding.UTF8))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(employees);
+                writer.Flush();
+                return memoryStream.ToArray();
+            }
         }
     }
 }

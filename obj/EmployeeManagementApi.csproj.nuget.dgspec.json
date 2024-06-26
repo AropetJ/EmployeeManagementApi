@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/aropet/Desktop/work/EmployeeManagementApi/EmployeeManagementApi.csproj": {}
+    "/home/aropet/Desktop/work/Job application/EmployeeManagementApi/EmployeeManagementApi.csproj": {}
   },
   "projects": {
-    "/home/aropet/Desktop/work/EmployeeManagementApi/EmployeeManagementApi.csproj": {
+    "/home/aropet/Desktop/work/Job application/EmployeeManagementApi/EmployeeManagementApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/aropet/Desktop/work/EmployeeManagementApi/EmployeeManagementApi.csproj",
+        "projectUniqueName": "/home/aropet/Desktop/work/Job application/EmployeeManagementApi/EmployeeManagementApi.csproj",
         "projectName": "EmployeeManagementApi",
-        "projectPath": "/home/aropet/Desktop/work/EmployeeManagementApi/EmployeeManagementApi.csproj",
+        "projectPath": "/home/aropet/Desktop/work/Job application/EmployeeManagementApi/EmployeeManagementApi.csproj",
         "packagesPath": "/home/aropet/.nuget/packages/",
-        "outputPath": "/home/aropet/Desktop/work/EmployeeManagementApi/obj/",
+        "outputPath": "/home/aropet/Desktop/work/Job application/EmployeeManagementApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/aropet/.nuget/NuGet/NuGet.Config"
@@ -41,6 +41,10 @@
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.0.1, )"
             },
             "FluentAssertions": {
               "target": "Package",

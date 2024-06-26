@@ -12,50 +12,61 @@ namespace EmployeeManagementApi.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly IConfiguration _configuration;
 
-        public AuthService(IUserRepository userRepository, IConfiguration configuration)
+        public AuthService(IEmployeeRepository employeeRepository, IConfiguration configuration)
         {
-            _userRepository = userRepository;
+            _employeeRepository = employeeRepository;
             _configuration = configuration;
         }
 
         public async Task<bool> RegisterUserAsync(RegisterModel model)
         {
-            var user = new User
+            var existingUser = await _employeeRepository.GetByEmailAsync(model.Email);
+            if (existingUser != null)
+            {
+                return false; // Email already exists
+            }
+
+            var employee = new Employee
             {
                 Username = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Phone = model.Phone,
+                Department = model.Department,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password)
             };
 
-            await _userRepository.AddUserAsync(user);
+            await _employeeRepository.AddEmployeeAsync(employee);
             return true;
         }
 
         public async Task<string?> LoginUserAsync(LoginModel model)
         {
-            var user = await _userRepository.GetByUsernameAsync(model.Username);
+            var employee = await _employeeRepository.GetByUsernameAsync(model.Username);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
+            if (employee == null || !BCrypt.Net.BCrypt.Verify(model.Password, employee.PasswordHash))
             {
                 return null;
             }
 
-            return GenerateJwtToken(user);
+            return GenerateJwtToken(employee);
         }
 
-        private string GenerateJwtToken(User user)
+        private string GenerateJwtToken(Employee employee)
         {
-            if (user == null) throw new ArgumentNullException(nameof(user));
+            if (employee == null) throw new ArgumentNullException(nameof(employee));
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? string.Empty);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, user.Username)
+                    new Claim(ClaimTypes.Name, employee.Username)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

@@ -93,5 +93,12 @@ namespace EmployeeManagementApi.Controllers
             await _employeeRepository.DeleteEmployeeAsync(id);
             return NoContent();
         }
+
+        [HttpGet("export")]
+        public async Task<IActionResult> ExportEmployeesToCsv()
+        {
+            var csvData = await _employeeRepository.ExportEmployeesToCsvAsync();
+            return File(csvData, "text/csv", "employees.csv");
+        }
     }
 }
